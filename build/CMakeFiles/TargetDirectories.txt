@@ -1,0 +1,3 @@
+C:/Users/archie.crew-gee/Documents/Programming/archies_standard_library/build/CMakeFiles/edit_cache.dir
+C:/Users/archie.crew-gee/Documents/Programming/archies_standard_library/build/CMakeFiles/STANDARD_LIBRARY.dir
+C:/Users/archie.crew-gee/Documents/Programming/archies_standard_library/build/CMakeFiles/rebuild_cache.dir
