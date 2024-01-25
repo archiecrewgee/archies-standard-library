@@ -40,5 +40,13 @@ void * allocate(size_t size);
 void deallocate(void * pointer);
 
 
+/**
+ * @brief Copys `size` bytes of memory from the source to the destination pointer
+ * 
+ * @param dst destination
+ * @param src source
+ * @param size size of the memory to copy
+ */
+void copy(void * dst, void * src, size_t size);
 
 #endif
