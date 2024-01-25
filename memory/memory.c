@@ -35,9 +35,9 @@ void * allocate(size_t size) {
     // itterate though map; find the first available map slot and applicable memory slot closest to the back of the heap
     for (uint32_t i = 0; i < _mapItems; i++) {
         // map item slot as null means it is currently unallocated
-        if (_heap[i * sizeof(MapItem_t)] == NULL) {
+        if (!_heap[i * sizeof(MapItem_t)]) {
             // copy in new map item
-            copy()
+            // copy()
         }
 
         // 
@@ -47,19 +47,17 @@ void * allocate(size_t size) {
 
     // append item to the map
     
-    _mapSize
 }
 
 
 void deallocate(void * pointer) {
 
 }
-
+#include "stdint.h"
 
 void copy(void * dst, void * src, size_t size) {
-    while (size != 0) {
-        *((size_t *) dst++) = *((size_t * ) src++);
-        size =- 1;
+    while (size-- != 0) {
+        *((char *) dst++) = *((char *) src++);
     }
 }
 
