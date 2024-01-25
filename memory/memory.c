@@ -44,7 +44,6 @@ void * allocate(size_t size) {
         .size = size
     };
 
-
     // itterate through the map and find first available map slot
     MapItem_t * p = _heap;
     do {
@@ -73,6 +72,17 @@ void deallocate(void * pointer) {
             break;                      // break and exit
         }
     }
+}
+
+void defragment(void) {
+    // defragmenting is done in two stages. 
+    // the first stage itterates through the map items and pushes them towards the start of the heap, todo: should they be ordered here???
+    // the second stage pushes all memory blocks to the end of the heap in order of their proximity to this, i.e. the closest byte to the end of the heap is pushed first
+    // it goes without saying that this function also updates the tail and head
+    
+    // push all map items to start of the heap
+    // this is performed with a bubble sort with key [a < b && b != N], NUll is always considered a swap 
+
 }
 
 

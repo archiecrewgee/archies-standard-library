@@ -40,6 +40,12 @@ void * allocate(size_t size);
 void deallocate(void * pointer);
 
 /**
+ * @brief Defragments the heap stack to byte-pack memory and map
+ * 
+ */
+void defragment(void);
+
+/**
  * @brief copys `size` bytes of memory from the source to the destination pointer
  * 
  * @param dst destination
