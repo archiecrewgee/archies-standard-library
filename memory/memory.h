@@ -39,16 +39,22 @@ void * allocate(size_t size);
  */
 void deallocate(void * pointer);
 
-void dump_heap();
-
-
 /**
- * @brief Copys `size` bytes of memory from the source to the destination pointer
+ * @brief copys `size` bytes of memory from the source to the destination pointer
  * 
  * @param dst destination
  * @param src source
  * @param size size of the memory to copy
  */
 void copy(void * dst, void * src, size_t size);
+
+/**
+ * @brief writes size value to `size` bytes of the location pointed to by `dst`
+ * 
+ * @param dst location to write to
+ * @param value value to write to memory 
+ * @param size size of the memory to set
+ */
+void set(void * dst, uint8_t value, size_t size);
 
 #endif

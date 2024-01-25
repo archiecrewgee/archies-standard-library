@@ -15,12 +15,10 @@ typedef struct {
 /* Constants */
 
 /* Internal Variables */
-static uint32_t _mapItems = 0;      // numnber of memory map items. This is the same as the number of allocated pieces of memory
-static size_t _heap[HEAP_SIZE];     // heap memory to allocate memory within 
-static size_t _remainingSize = HEAP_SIZE;
-
-static size_t * head = _heap;
-static size_t * tail = &_heap[HEAP_SIZE - 1];
+static size_t _heap[HEAP_SIZE];                 // heap memory to allocate memory within 
+static size_t _remainingSize = HEAP_SIZE;       // contains the remaining size of the heap
+static size_t * _head = _heap;                  // head of the heap; equivilent to the tail of the map
+static size_t * _tail = &_heap[HEAP_SIZE - 1];  // tail of the heap; this is equivilent to the start of the last allocated memory. Note that memory is assigned in inverse
 
 /* Private Function Declaration */
 
@@ -33,16 +31,16 @@ void * allocate(size_t size) {
     _remainingSize += size + sizeof(MapItem_t);
 
     // check if heap needs defragmenting
-    if (tail - size < head) {
+    if (_tail - size < _head) {
         // todo: defragment
     }
 
     // offset tail by size of item added
-    tail -= size;
+    _tail -= size;
 
     // create dummy store of map item to copy to memory
     MapItem_t newMemory = {
-        .location = tail,
+        .location = _tail,
         .size = size
     };
 
@@ -53,37 +51,42 @@ void * allocate(size_t size) {
         // map item slot as null means it is currently unallocated, 
         if (!*((uint8_t *) p)) {
             // copy in new memory and update map head if nessecary
-            copy(p, &newMemory, sizeof(MapItem_t));     
-            if (p == head) { 
-                head += sizeof(MapItem_t); 
+            copy(p, &newMemory, sizeof(*p));     
+            if (p == _head) { 
+                _head += sizeof(*p); 
             }
 
             break;
         }
-    } while (p++ < head);
+    } while (p++ < _head);
 
     return newMemory.location;
 }
 
 
 void deallocate(void * pointer) {
-
+    // find pointer in map, itterate through map and NULL value of matching pointer
+    for(MapItem_t * p = _heap; p < _head; p++) {
+        if (p == pointer) { 
+            set(p, 0, sizeof(*p));
+            _remainingSize -= p->size;  // update size
+            break;                      // break and exit
+        }
+    }
 }
 
+
 void copy(void * dst, void * src, size_t size) {
-    while (size-- != 0) {
+    while (size--) {
         *((uint8_t *) dst++) = *((uint8_t *) src++);
     }
 }
 
-void dump_heap() {
-    // for (size_t * h = _heap; h < &_heap[HEAP_SIZE]; h++) {
-    //     printf("%d", (uint8_t)h %  8);
-    //     if (!((uint32_t) h % (uint32_t) 8)) { printf("\n"); }
 
-    //     printf("%02lx ", *h);
-    // }
-    printf("todo remove me");
+void set(void * dst, uint8_t value, size_t size) {
+    while (size--) {
+        *((uint8_t *) dst++) = value;
+    }
 }
 
 /* Private Function Definiton */

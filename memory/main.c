@@ -46,5 +46,7 @@ int main() {
     for (int i = 0; i < sizeof(c); i++) { printf("%d ", *(bLocation + i)); }
     printf("\n");
 
+    deallocate(bLocation);
+
     return 1;
 }
