@@ -7,10 +7,11 @@ int main() {
 
     uint32_t a, b;
 
-    printf("%d -> %d\n", a, b);
-    b = 0xaabbccdd;
+
+    b = 24;
+    printf("\n%u -> %u\n", b, a);
     copy(&a, &b, sizeof(b));
-    printf("%d -> %d\n", a, b);
+    printf("%u -> %u\n", b, a);
 
     uint8_t c[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     uint8_t d[sizeof(c)];
@@ -27,5 +28,23 @@ int main() {
     for (int i = 0; i < sizeof(c); i++) { printf("%d ", d[i]); }
     printf("\n");
 
-    return 0;
+    printf("\nheap start\n");
+
+    uint8_t * aLocation = allocate(sizeof(c));
+    for (int i = 0; i < sizeof(c); i++) { printf("%d ", *(aLocation + i)); }
+    printf("\n");
+
+    copy(aLocation, c, 4);
+    for (int i = 0; i < sizeof(c); i++) { printf("%d ", *(aLocation + i)); }
+    printf("\n");
+
+    uint8_t * bLocation = allocate(sizeof(c));
+    for (int i = 0; i < sizeof(c); i++) { printf("%d ", *(bLocation + i)); }
+    printf("\n");
+
+    copy(bLocation, &c[5], 4);
+    for (int i = 0; i < sizeof(c); i++) { printf("%d ", *(bLocation + i)); }
+    printf("\n");
+
+    return 1;
 }

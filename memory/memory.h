@@ -39,6 +39,8 @@ void * allocate(size_t size);
  */
 void deallocate(void * pointer);
 
+void dump_heap();
+
 
 /**
  * @brief Copys `size` bytes of memory from the source to the destination pointer
