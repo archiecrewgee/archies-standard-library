@@ -13,6 +13,7 @@
 
 /* Standard Includes */
 #include "stddef.h"
+#include "stdint.h"
 
 /* Internal Includes */
 
@@ -55,6 +56,16 @@ void defragment(void);
 void copy(void * dst, void * src, size_t size);
 
 /**
+ * @brief copys `size` bytes of memory from the source to the destination pointer. 
+ *  This opperation is corruption safe and allows memory spaces ot overlap
+ * 
+ * @param dst destination
+ * @param src source
+ * @param size size of the memory to copy
+ */
+void copy_safe(void * dst, void * src, size_t size);
+
+/**
  * @brief writes size value to `size` bytes of the location pointed to by `dst`
  * 
  * @param dst location to write to
@@ -62,5 +73,7 @@ void copy(void * dst, void * src, size_t size);
  * @param size size of the memory to set
  */
 void set(void * dst, uint8_t value, size_t size);
+
+
 
 #endif

@@ -93,6 +93,15 @@ void copy(void * dst, void * src, size_t size) {
 }
 
 
+void copy_safe(void * dst, void * src, size_t size) {
+    uint8_t intermediate;
+    while (size--) {
+        intermediate = *((uint8_t *) src++);
+        *((uint8_t *) dst++) = intermediate;
+    }
+}
+
+
 void set(void * dst, uint8_t value, size_t size) {
     while (size--) {
         *((uint8_t *) dst++) = value;
