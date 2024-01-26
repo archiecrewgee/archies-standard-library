@@ -1,7 +1,0 @@
-[
-{
-  "directory": "C:/Users/archie.crew-gee/Documents/Programming/archies_standard_library/build",
-  "command": "C:\\msys64\\mingw64\\bin\\x86_64-w64-mingw32-gcc.exe -g -o CMakeFiles\\STANDARD_LIBRARY.dir\\main.c.obj -c C:\\Users\\archie.crew-gee\\Documents\\Programming\\archies_standard_library\\main.c",
-  "file": "C:\\Users\\archie.crew-gee\\Documents\\Programming\\archies_standard_library\\main.c"
-}
-]
