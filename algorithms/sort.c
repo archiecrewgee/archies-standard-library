@@ -37,9 +37,6 @@ void sort_bubble(void * arr, size_t elementSize, uint32_t arrLen, SortBubbleKey_
             // perform swap and update element 
             swap(element, other, elementSize);
             element = other;
-            swaps++;
         }
     }
-
-    return arr;
 }

@@ -66,6 +66,15 @@ void copy(void * dst, void * src, size_t size);
 void copy_safe(void * dst, void * src, size_t size);
 
 /**
+ * @brief swaps too elements of an arbitary size
+ * 
+ * @param a pointer to element a
+ * @param b pointer to element b
+ * @param size size of the memory to swap
+ */
+void swap(void * a, void * b, size_t size);
+
+/**
  * @brief writes size value to `size` bytes of the location pointed to by `dst`
  * 
  * @param dst location to write to

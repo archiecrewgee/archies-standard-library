@@ -48,5 +48,12 @@ int main() {
 
     deallocate(bLocation);
 
+    for (int i = 0; i < 100; i++) {
+        printf("\n%d | %p", i, allocate(2));
+    }
+
+    printf("\n%p", allocate(200));
+    printf("\n%p", NULL);
+
     return 1;
 }

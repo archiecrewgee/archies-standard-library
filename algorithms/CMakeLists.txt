@@ -1,8 +1,7 @@
-target_include_directories(${archies_standard_library} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
-target_sources(${archies_standard_library}
+target_include_directories(${asl} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_sources(${asl}
     PRIVATE
         sort.c
 )
 
-message(STATUS "Added /algorithms")
+message(STATUS "/algorithms")
