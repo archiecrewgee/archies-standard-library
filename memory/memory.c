@@ -47,16 +47,16 @@ void * allocate(size_t size) {
     // itterate through the map and find first available map slot
     MapItem_t * p = _heap;
     do {
-        // map item slot as null means it is currently unallocated, 
-        if (!*((uint8_t *) p)) {
-            // copy in new memory and update map head if nessecary
-            copy(p, &newMemory, sizeof(*p));     
-            if (p == _head) { 
-                _head += sizeof(*p); 
-            }
-
-            break;
+        // map item slot as null means it is currently unallocated
+        if (*((uint8_t *) p)) { continue; }
+        
+        // copy in new memory and update map head if nessecary
+        copy(p, &newMemory, sizeof(*p));     
+        if (p == _head) { 
+            _head += sizeof(*p); 
         }
+
+        break;
     } while (p++ < _head);
 
     return newMemory.location;
