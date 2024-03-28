@@ -16,8 +16,6 @@
 
 /* Private Function Definiton */
 void sort_bubble(void * arr, size_t elementSize, uint32_t arrLen, SortBubbleKey_t key) {
-    // todo: add swap count
-    // todo does this hit the last value
     // declare variables for clarity
     void * element, * other;
 
