@@ -66,7 +66,7 @@ void copy(void * dst, void * src, size_t size);
 void copy_safe(void * dst, void * src, size_t size);
 
 /**
- * @brief swaps too elements of an arbitary size
+ * @brief swaps two elements of an arbitary size
  * 
  * @param a pointer to element a
  * @param b pointer to element b
