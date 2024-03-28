@@ -3,7 +3,6 @@
 #define MEMORY_IO_H_
 
 /* Standard Includes */
-#include "stddef.h"
 #include "stdint.h"
 
 /* Internal Includes */
@@ -25,6 +24,7 @@ typedef int (MemoryIO_ReadBlock_f)(uint32_t blockAddress, uint8_t * dst);
 /**
  * @brief Memory paradigm instance defining the memory paramters and IO function calls. 
  * todo: describe how this should be defined
+ * todo: describe why the scratch is described externally
  * 
  */
 typedef const struct {
@@ -34,6 +34,8 @@ typedef const struct {
     } block;
     MemoryIO_WriteBlock_f write_block;
     MemoryIO_ReadBlock_f read_block;
+    
+    uint8_t * scratch;  // this should be allocated dynamically/statically a location in memory of the same size as a block
 } MemoryIO_Paradigm_t;
 
 /* Constants */
@@ -49,7 +51,7 @@ typedef const struct {
  * @param len the number of bytes to writen
  * @return int return value; 0 on success and 1 on failure (note that a failure can only occur in the block IO functionality)
  */
-int memory_io_bytes_set(MemoryIO_Paradigm_t &paradigm, uint32_t address, uint8_t * src, uint32_t len);
+int memory_io_bytes_set(MemoryIO_Paradigm_t * paradigm, uint32_t address, uint8_t * src, uint32_t len);
 
 /**
  * @brief Reads len bytes from the given memory paradigm to dst
@@ -60,5 +62,6 @@ int memory_io_bytes_set(MemoryIO_Paradigm_t &paradigm, uint32_t address, uint8_t
  * @param len the number of bytes to read
  * @return int return value; 0 on success and 1 on failure (note that a failure can only occur in the block IO functionality)
  */
-int memory_io_bytes_get(MemoryIO_Paradigm_t &paradigm, uint32_t address, uint8_t * dst, uint32_t len);
+int memory_io_bytes_get(MemoryIO_Paradigm_t * paradigm, uint32_t address, uint8_t * dst, uint32_t len);
+
 #endif
