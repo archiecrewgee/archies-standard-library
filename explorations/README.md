@@ -27,6 +27,7 @@ how is memory defined, imagine a json file:
     "name" : {
         "block_size" : a,
         "block_increment" : b,
+        "total_size" : c,       // in blocks
         "tags" : [
             "tag_0",
             "tag_1",
@@ -72,9 +73,20 @@ typedef union {
     uint8_t raw,
 } MyTag_u;  // packed to 1
 
+// paradigm functions are defined by the user
+if_write_block(address, dst, src);
+if_read_block(address, dst);
+
 // use instance based design
-MemParadigm_s internalFlash;
-mem_init(&internalFlash, INTERNAL_FLASH_BLOCK_SIZE, INTERNAL_FLASH_BLOCK_INCREMENT);
+MemParadigm_s internalFlash = {
+    .block = {
+        size = INTERNAL_FLASH_BLOCK_SIZE,
+        increment = INTERNAL_FLASH_BLOCK_INCREMENT,
+    },
+    .write_block = if_write_block,
+    .read_block = if_read_block,
+}; 
+mem_init(&internalFlash);
 // mem_deinit(&internalFlash);
 
 // note that <tag>_<parameter> is a macro that expands to parameter data such as block offset and size, this stops ram space being taken up by constant parameters
@@ -82,4 +94,6 @@ mem_parameter_get(&internalFlash, <tag>_<parameter>, &dst);
 mem_parameter_set(&internalFlash, <tag>_<parameter>, &dst);
 mem_tag_get(&internalFlash, <tag>, &dst);
 mem_tag_set(&internalFlash, <tag>, &dst);
+
+// todo should it be: instance, dst, src instead??
 ```
