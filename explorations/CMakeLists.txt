@@ -13,4 +13,4 @@ message("Created project executable " ${asl})
 
 # Include sub directories #
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-target_sources(${asl} PUBLIC )  # TODO: add files here
+target_sources(${asl} PUBLIC memory_io.c)

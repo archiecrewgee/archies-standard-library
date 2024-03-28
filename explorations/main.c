@@ -1,7 +1,7 @@
 #include "stdio.h"
 
 int main() {
-    printf("Hola amigos!\n");
+    printf("memory bridge\n");
 
     return 0;
 }
