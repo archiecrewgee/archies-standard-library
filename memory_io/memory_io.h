@@ -15,7 +15,7 @@
  *  Non-zero return value is considered a failure
  * @note This function is treated as blocking
  */
-typedef int (MemoryIO_WriteBlock_f)(uint32_t blockAddress, uint8_t * src);
+typedef int (*MemoryIO_WriteBlock_f)(uint32_t blockAddress, uint8_t * src);
 
 /**
  * @brief 
@@ -23,7 +23,7 @@ typedef int (MemoryIO_WriteBlock_f)(uint32_t blockAddress, uint8_t * src);
  *  Non-zero return value is considered a failure
  * @note This function is treated as blocking
  */
-typedef int (MemoryIO_ReadBlock_f)(uint32_t blockAddress, uint8_t * dst);
+typedef int (*MemoryIO_ReadBlock_f)(uint32_t blockAddress, uint8_t * dst);
 
 /**
  * @brief Memory paradigm instance defining the memory paramters and IO function calls. 
@@ -36,8 +36,8 @@ typedef const struct {
         uint32_t size;
         uint32_t increment;
     } block;
-    MemoryIO_WriteBlock_f * write_block;
-    MemoryIO_ReadBlock_f  * read_block;
+    MemoryIO_WriteBlock_f write_block;
+    MemoryIO_ReadBlock_f  read_block;
     
     uint8_t * scratch;  // this should be allocated dynamically/statically a location in memory of the same size as a given paradigm's block
 } MemoryIO_Paradigm_t;
