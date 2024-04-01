@@ -114,7 +114,7 @@ static uint32_t _update_byte_processor_state(MemoryIO_Paradigm_t * paradigm, uin
     } else if (remainingLen < paradigm->block.size) {
         return 3;
     } else if (startAddress % paradigm->block.size || currentState == 1) {
-        return 2;
+        return 2;   // todo should default to two fix with tests and add state machine init parameter
     } 
     
     return 1;
