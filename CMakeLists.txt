@@ -41,5 +41,9 @@ add_subdirectory(algorithms)
 add_subdirectory(memory)
 add_subdirectory(memory_io)
 
-# add main.c to executable
-target_sources(${asl} PRIVATE main.c)
+# add debugging mainc.c to executable or tests
+if (DEFINED CONFIG_CMAKE_TESTS_ENABLE)
+    add_subdirectory(tests)
+else ()
+    target_sources(${asl} PRIVATE main.c)
+endif ()

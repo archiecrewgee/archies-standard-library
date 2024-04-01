@@ -14,7 +14,7 @@ Experimental project for testing small software libraries.
  * build scripts
  * configure scripts
  * compilation selection and cmake processing should occur at the same directory level 
-
+ * obvs could use testing framework like gmock but tinycrypt had a nice int return build thing going which i actually really enjoyed so will try unit tests with that
 
 # setup 
 

@@ -16,6 +16,9 @@ mkdir $build_dir
 cmake $source -B $build_dir -G "Ninja"
 cmake --build $build_dir
 
-if [ $1 = "run" ]; then
-    $build_dir/asl
+if [ $# -gt 0 ]; then
+    if [ $1 = "run" ]; then
+        echo "--------------- running ---------------"
+        $build_dir/asl
+    fi
 fi
