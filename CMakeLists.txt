@@ -12,21 +12,34 @@ set(CMAKE_VERBOSE_BUILD ON CACHE BOOL "ON")
 # force depreciation warning off #
 set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
 
-# TODO: potentially need to set linker language CXX
+# set CMakeLists scripts path # 
+message("Extending CMake module search path")
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-message("Beginning Project Compilation")
+# Gather KConfig variables for use in CMake #
+set(kconfig_path "${CMAKE_CURRENT_SOURCE_DIR}/.config")
+include(import_kconfig)
+import_kconfig("CONFIG_CMAKE" ${kconfig_path}) 
+message(STATUS "gathered KConfig variables at path: " ${kconfig_path})
+
 
 # Set project name #
-project("STANDARD_LIBRARY")
+project("asl")
+
+# Begin project compilation #
+message("Beginning Project Compilation")
 
 # Create the project as an executable #
-set(PROJECT_EXECUTABLE ${PROJECT_NAME})
-add_executable(${PROJECT_EXECUTABLE} "")
+set(asl ${PROJECT_NAME})
+add_executable(${asl} "")
 
-message("Created project executable " ${PROJECT_EXECUTABLE})
+message("Created project executable: " ${asl})
 
 # Include sub directories #
-
+add_subdirectory(helpers)
+add_subdirectory(algorithms)
+add_subdirectory(memory)
+add_subdirectory(memory_io)
 
 # add main.c to executable
-target_sources(${PROJECT_EXECUTABLE} PRIVATE main.c)
+target_sources(${asl} PRIVATE main.c)

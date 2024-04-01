@@ -21,7 +21,7 @@
 
 /* Constants */
 // heap size in bytes
-#define HEAP_SIZE 255
+#define HEAP_SIZE 255   // note heap should be moved to instance based
 
 /* Public Function Declaration */
 

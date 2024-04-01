@@ -1,0 +1,7 @@
+menu "Archie's Standard Library"
+
+rsource "algorithms/kconfig"
+rsource "memory/kconfig"
+rsource "memory_io/kconfig"
+
+endmenu

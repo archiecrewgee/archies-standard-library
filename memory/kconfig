@@ -1,0 +1,3 @@
+config CMAKE_MEMORY_ENABLE
+    bool 'enable memory' 
+    select CMAKE_ALGORITHMS_ENABLE

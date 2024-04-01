@@ -12,8 +12,7 @@ add_executable(${asl} main.c)
 message("Created project executable " ${asl})
 
 # Include sub directories #
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-target_sources(${asl} PUBLIC memory_io.c)
+
 
 # Add external directories #
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../helpers external_directories/helpers)

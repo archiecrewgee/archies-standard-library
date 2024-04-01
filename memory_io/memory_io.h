@@ -36,8 +36,8 @@ typedef const struct {
         uint32_t size;
         uint32_t increment;
     } block;
-    MemoryIO_WriteBlock_f write_block;
-    MemoryIO_ReadBlock_f read_block;
+    MemoryIO_WriteBlock_f * write_block;
+    MemoryIO_ReadBlock_f  * read_block;
     
     uint8_t * scratch;  // this should be allocated dynamically/statically a location in memory of the same size as a given paradigm's block
 } MemoryIO_Paradigm_t;
