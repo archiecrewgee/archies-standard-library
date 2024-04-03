@@ -5,17 +5,13 @@
 #include "tests.h"
 #include "unit_tests_memory_io.h"
 
+/* Constants */
+const char * passFailStr[] = { "fail",  "pass" }; 
+
 /* Testing blocks */
-typedef Tests_SuiteReturn_t (*Tests_SuiteRunner_f)(void);
-
-typedef struct {
-    char * name;
-    Tests_SuiteRunner_f run;
-} Tests_Display_t;
-
-Tests_Display_t _unitTests[] = {
-    (Tests_Display_t) {
-        .name = "memory_io",
+static Tests_SuiteDisplay_t _unitTests[] = {
+    (Tests_SuiteDisplay_t) {
+        .name = MEMORY_IO_TEST_SUITE_NAME,
         .run = memory_io_test_suite_run,
     },
     // add more tests here
@@ -23,15 +19,14 @@ Tests_Display_t _unitTests[] = {
 
 
 int main() {
-    printf("Beginning tests\n");
+    printf("Beginning ASL tests...\n");
 
     printf("\n-- Unit Tests --");
-    printf("\nwhats going on here");
     Tests_SuiteReturn_t result;
     for (int i = 0; i < sizeof(_unitTests) / sizeof(*_unitTests); i++) {
-        printf("\nRunning unit test: %s", _unitTests[i].name);
+        printf("\nRunning suite: %s", _unitTests[i].name);
         result = _unitTests[i].run();
-        printf("\n\t%d / %d tests passed", result.passedTests, result.totalTests);
+        printf("\nTests passed: %d / %d (%.1f%%)", result.passedTests, result.totalTests, ((float) result.passedTests) / ((float) result.totalTests) * 100.0);
     }
     
     printf("\nFinished all tests");

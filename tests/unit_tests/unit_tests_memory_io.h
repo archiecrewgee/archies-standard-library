@@ -9,6 +9,7 @@
 /* Structures */
 
 /* Constants */
+#define MEMORY_IO_TEST_SUITE_NAME "memory_io_test_suite"
 
 /* Public Function Declaration */
 
