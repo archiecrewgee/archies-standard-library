@@ -25,7 +25,7 @@ static int test_sanity_fail(void);
 /* Medium 0 tests */
 static MemoryIO_Medium_t _medium_0 = {
 
-}
+};
 
 static int test_medium_0_block_set(void);
 static int test_medium_0_block_get(void);
@@ -38,8 +38,10 @@ static Tests_TestDisplay_t _tests[] = {
     }, {
         .name = "sanity_test_fail",
         .run = test_sanity_fail
-    },
-    {
+    }, {
+        .name = "medium_0_block_get",
+        .run = test_medium_0_block_get
+    }, {
         .name = "medium_0_block_set",
         .run = test_medium_0_block_set
     },
@@ -64,5 +66,13 @@ static int test_sanity(void) {
 
 
 static int test_sanity_fail(void) {
+    return 1;
+}
+
+static int test_medium_0_block_set(void) {
+    return 0;
+}
+
+static int test_medium_0_block_get(void) {
     return 0;
 }

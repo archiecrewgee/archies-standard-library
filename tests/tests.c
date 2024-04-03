@@ -6,7 +6,7 @@
 #include "unit_tests_memory_io.h"
 
 /* Constants */
-const char * passFailStr[] = { "fail",  "pass" }; 
+const char * passFailStr[] = { "\033[0;31mfail\033[0;0m",  "\033[0;32mpass\033[0;0m" }; 
 
 /* Testing blocks */
 static Tests_SuiteDisplay_t _unitTests[] = {
