@@ -6,6 +6,8 @@
 #include "tests.h"
 #include "unit_tests_memory_io.h"
 
+#include "memory_io.h"
+
 /* Structures */
 
 /* Constants */
@@ -20,6 +22,14 @@ static Tests_SuiteReturn_t _performance = {
 static int test_sanity(void);
 static int test_sanity_fail(void);
 
+/* Medium 0 tests */
+static MemoryIO_Medium_t _medium_0 = {
+
+}
+
+static int test_medium_0_block_set(void);
+static int test_medium_0_block_get(void);
+
 /* Test Runner */
 static Tests_TestDisplay_t _tests[] = {
     {
@@ -28,6 +38,10 @@ static Tests_TestDisplay_t _tests[] = {
     }, {
         .name = "sanity_test_fail",
         .run = test_sanity_fail
+    },
+    {
+        .name = "medium_0_block_set",
+        .run = test_medium_0_block_set
     },
 };
 

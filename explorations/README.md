@@ -2,7 +2,7 @@ This is a set of interface explorations without consideration of proper project 
 
 # Memory Bridge
 
-The memory bridge exists to abstract and simplify the process of syncing and interacting with different memory paradigms on embedded devices. The example usage would be an MCU that must interface with and sync its FLASH memory, and say two external peripherals.
+The memory bridge exists to abstract and simplify the process of syncing and interacting with different memory mediums on embedded devices. The example usage would be an MCU that must interface with and sync its FLASH memory, and say two external peripherals.
 
 The goals consist of two stages:
 
@@ -13,8 +13,8 @@ Achieving these goals should reduce the errors related to memory manipulation an
 
 nomenclature:
  - parameter: zone of memory that contains a given named value
- - block: minimum readable/writable granularity of a given memory paradigm. For example flash may only be written to in 1kB size pages
- - paradigm: given memory medium (i.e. internal flash, external RTC RAM etc.). These are defined by:
+ - block: minimum readable/writable granularity of a given memory medium. For example flash may only be written to in 1kB size pages
+ - medium: given memory medium (i.e. internal flash, external RTC RAM etc.). These are defined by:
     - block_size: the size (in bytes) of the memory's block
     - block_increment: the increment between memory blocks. For example, a memory block address could be defined as a byte or arbitary offset
  - tag: an arbitary tag given to parameters, parameters with shared tags are grouped
@@ -23,7 +23,7 @@ nomenclature:
 how is memory defined, imagine a json file:
 
 ```JSON
-"paradigm" : {
+"medium" : {
     "name" : {
         "block_size" : a,
         "block_increment" : b,
@@ -73,12 +73,12 @@ typedef union {
     uint8_t raw,
 } MyTag_u;  // packed to 1
 
-// paradigm functions are defined by the user
+// medium functions are defined by the user
 if_write_block(address, dst, src);
 if_read_block(address, dst);
 
 // use instance based design
-MemParadigm_s internalFlash = {
+MemMedium_s internalFlash = {
     .block = {
         size = INTERNAL_FLASH_BLOCK_SIZE,
         increment = INTERNAL_FLASH_BLOCK_INCREMENT,
