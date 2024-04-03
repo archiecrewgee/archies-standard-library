@@ -144,6 +144,18 @@ void set(void * dst, uint8_t value, size_t size) {
     }
 }
 
+
+bool compare(void * a, void * b, size_t size) {
+    // itterate through elements until difference is found, default is passing state
+    while (size--) {
+        if (*((uint8_t *) a++) != *((uint8_t *) b++)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 /* Private Function Definiton */
 static uint32_t _number_of_map_items() {
     uint32_t sum = 0;

@@ -14,6 +14,7 @@
 /* Standard Includes */
 #include "stddef.h"
 #include "stdint.h"
+#include "stdbool.h"
 
 /* Internal Includes */
 
@@ -83,6 +84,15 @@ void swap(void * a, void * b, size_t size);
  */
 void set(void * dst, uint8_t value, size_t size);
 
-
+/**
+ * @brief Compares two elements of an arbitary size
+ * 
+ * @param a pointer to the first element
+ * @param b pointer to the seconds element
+ * @param size size of the memory to compare
+ * @return true a and b are identical
+ * @return false a and b are not identical
+ */
+bool compare(void * a, void * b, size_t size);
 
 #endif

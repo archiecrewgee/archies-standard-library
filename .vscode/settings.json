@@ -3,6 +3,7 @@
         "random": "c",
         "stddef.h": "c",
         "stdio.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "memory.h": "c"
     }
 }
