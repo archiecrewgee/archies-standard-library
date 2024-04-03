@@ -12,8 +12,8 @@
 
 /* Variables */
 static Tests_SuiteReturn_t _performance = {
-    .totalTests = 0,
-    .passedTests = 0,
+    .testsTotal = 0,
+    .testsPassed = 0,
 };
 
 /* Private Function Declaration */
@@ -33,10 +33,10 @@ static Tests_TestDisplay_t _tests[] = {
 
 /* Public Function Definiton */
 Tests_SuiteReturn_t memory_io_test_suite_run(void) {
-    _performance.totalTests = sizeof(_tests) / sizeof(*_tests);
-    for (int i = 0, pass = 0; i < _performance.totalTests; i++) {
+    _performance.testsTotal = sizeof(_tests) / sizeof(*_tests);
+    for (int i = 0, pass = 0; i < _performance.testsTotal; i++) {
         pass = _tests[i].run() == 0;
-        _performance.passedTests += pass;
+        _performance.testsPassed += pass;
         printf("\n\t%s | %s.%s", passFailStr[pass], MEMORY_IO_TEST_SUITE_NAME, _tests[i].name);
     }
 
@@ -50,5 +50,5 @@ static int test_sanity(void) {
 
 
 static int test_sanity_fail(void) {
-    return 1;
+    return 0;
 }

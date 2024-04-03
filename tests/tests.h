@@ -8,8 +8,8 @@
 
 /* Structures and types*/
 typedef struct {
-    uint32_t totalTests;
-    uint32_t passedTests;
+    uint32_t testsTotal;
+    uint32_t testsPassed;
 } Tests_SuiteReturn_t;
 
 typedef Tests_SuiteReturn_t (*Tests_SuiteRunner_f)(void);
