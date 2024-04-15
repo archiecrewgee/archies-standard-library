@@ -36,8 +36,47 @@ static uint32_t _byte_processor_state_init(MemoryIO_Medium_t * medium, uint32_t 
 
 /* Public Function Definiton */
 int memory_io_bytes_set(MemoryIO_Medium_t * medium, uint32_t address, uint8_t * src, uint32_t len) {
-    // define blocks to 
+    // introduce local variables
+    uint32_t currentBlock = _byte_to_block_address(medium, address);
+    uint32_t remainingLen = len, activeLen;
+    uint32_t state = _byte_processor_state_init(medium, address, remainingLen);
 
+    // itterate through all blocks...
+    while (state < 4) {
+        // if block is partially written to (non 2 state of byte processor) then it must be read first
+        // note that this can fail
+        if (state != 2) {
+            asl_assert_r(medium->read_block(currentBlock, medium->scratch), 1);
+        }
+
+        // based on current state update the scratch
+        switch (state) {
+            case 1: // start byte is offset from start of block
+                activeLen = medium->block.size - (address % medium->block.size);
+                copy(medium->scratch + (medium->block.size - activeLen), src, activeLen);
+                break;
+            case 2: // bytes are encapsulated by block 
+                activeLen = medium->block.size;
+                copy(medium->scratch, src, activeLen);
+                break;
+            case 3: // bytes aligned with start of block but do not reach end
+                activeLen = remainingLen;
+                copy(medium->scratch, src, activeLen);
+                break;
+            default:
+                break;
+        }
+
+        // write block to medium
+        asl_assert_r(medium->write_block(currentBlock, medium->scratch), 1);
+
+        // update parameters and state
+        currentBlock += medium->block.increment;
+        remainingLen -= activeLen;
+        src += activeLen;
+
+        state = _byte_processor_state_update(medium, remainingLen, state);
+    }
 
     return 0;
 }
@@ -65,7 +104,7 @@ int memory_io_bytes_get(MemoryIO_Medium_t * medium, uint32_t address, uint8_t * 
                 break;
             case 3: // bytes aligned with start of block but do not reach end
                 activeLen = remainingLen;
-                copy(dst, medium->scratch + medium->block.size - remainingLen, activeLen);
+                copy(dst, medium->scratch, activeLen);
                 break;
             default:
                 break;

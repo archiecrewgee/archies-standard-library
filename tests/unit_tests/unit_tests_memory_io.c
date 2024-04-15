@@ -150,8 +150,13 @@ static int test_medium_1_byte_get(void) {
     printf("\n%d, %s | %s", testsPassed, testStr, compStr);
     
     // offset
+    copy(&_medium_1_memory[16 * 4 + 3], testStr, sizeof(testStr));
+    memory_io_bytes_get(&_medium_1, 16 * 4 + 3, compStr, sizeof(testStr));
 
-    return !(testsPassed == 1);
+    testsPassed += compare(testStr, compStr, sizeof(testStr));
+    printf("\n%d, %s | %s", testsPassed, testStr, compStr);
+
+    return testsPassed != 2;
 }
 static int test_medium_1_byte_set(void) {
     return 0;
