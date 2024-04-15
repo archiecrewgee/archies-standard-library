@@ -27,10 +27,6 @@ static uint32_t _block_to_byte_address(MemoryIO_Medium_t * medium, uint32_t addr
 //  2 = absence of other states
 //  3 = remaining length to process (in bytes) is less than the size of a block
 //  4 = no other conditions met AND (current state is [3] OR remaining length is zero) 
-// given this from all start positions, noting that 2 state can always go to itself
-//  1 -> 2 ->? 3 -> 4
-//  2 ->? 3 -> 4
-//  3 -> 4
 static uint32_t _byte_processor_state_update(MemoryIO_Medium_t * medium, uint32_t remainingLen, uint32_t currentState);
 static uint32_t _byte_processor_state_init(MemoryIO_Medium_t * medium, uint32_t startAddress, uint32_t remainingLen);
 
