@@ -76,6 +76,9 @@ static MemoryIO_Medium_t _medium_1 = {
     .scratch = _medium_1_scratch,
 };
 
+static int test_medium_1_byte_get(void);
+static int test_medium_1_byte_set(void);
+
 
 /* Test Runner */
 static Tests_TestDisplay_t _tests[] = {
@@ -85,7 +88,13 @@ static Tests_TestDisplay_t _tests[] = {
     }, {
         .name = "medium_0_block_set",
         .run = test_medium_0_block_set
-    },
+    }, {
+        .name = "medium_1_byte_get",
+        .run = test_medium_1_byte_get
+    }, {
+        .name = "medium_1_byte_set",
+        .run = test_medium_1_byte_set
+    }
 };
 
 /* Public Function Definiton */
@@ -105,6 +114,8 @@ static int test_medium_0_block_set(void) {
     char testStr[] = "hello world";
     int testsPassed = 0;
     
+    set(_medium_0_memory, 0, sizeof(_medium_0_memory));
+
     memory_io_blocks_set(&_medium_0, 0, testStr, sizeof(testStr));
     testsPassed += compare(&_medium_0_memory[0], testStr, sizeof(testStr));
 
@@ -123,4 +134,25 @@ static int test_medium_0_block_get(void) {
     memory_io_blocks_get(&_medium_0, 40, testStr, 12);
     
     return !compare(testStr, "hello world", 12);
+}
+
+static int test_medium_1_byte_get(void) {
+    // note that block is size 4 but increments with 1... therefore
+    int testsPassed = 0;
+
+    // basic alignment
+    char testStr[] = "this is a 21B string", compStr[21] = { 0 };
+
+    copy(&_medium_1_memory[16 * 4], testStr, sizeof(testStr));
+    memory_io_bytes_get(&_medium_1, 16 * 4, compStr, sizeof(testStr));
+
+    testsPassed += compare(testStr, compStr, sizeof(testStr));
+    printf("\n%d, %s | %s", testsPassed, testStr, compStr);
+    
+    // offset
+
+    return !(testsPassed == 1);
+}
+static int test_medium_1_byte_set(void) {
+    return 0;
 }

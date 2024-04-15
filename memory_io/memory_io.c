@@ -18,9 +18,9 @@ static uint32_t _block_to_byte_address(MemoryIO_Medium_t * medium, uint32_t addr
 // updates the current state of the byte-by-byte processor
 // byte-by-byte interaction is performed with block processing acting as a state machine:
 //  0: start state
-//  1. partial interaction (offset from start) 
+//  1. partial interaction (msb offset) 
 //  2. complete block interaction
-//  3. partial interaction (zero offset from end)
+//  3. partial interaction (lsb offset)
 //  4. exit state
 // initial state is defined as so:
 //  1 = address not alligned with block boundry AND NOT remaining length (to read) is less than the size of a block  
@@ -31,7 +31,8 @@ static uint32_t _block_to_byte_address(MemoryIO_Medium_t * medium, uint32_t addr
 //  1 -> 2 ->? 3 -> 4
 //  2 ->? 3 -> 4
 //  3 -> 4
-static uint32_t _update_byte_processor_state(MemoryIO_Medium_t * medium,  uint32_t startAddress, uint32_t remainingLen, uint32_t currentState);
+static uint32_t _byte_processor_state_update(MemoryIO_Medium_t * medium, uint32_t remainingLen, uint32_t currentState);
+static uint32_t _byte_processor_state_init(MemoryIO_Medium_t * medium, uint32_t startAddress, uint32_t remainingLen);
 
 /* Public Function Definiton */
 int memory_io_bytes_set(MemoryIO_Medium_t * medium, uint32_t address, uint8_t * src, uint32_t len) {
@@ -45,7 +46,7 @@ int memory_io_bytes_get(MemoryIO_Medium_t * medium, uint32_t address, uint8_t * 
     // introduce local variables
     uint32_t currentBlock = _byte_to_block_address(medium, address);
     uint32_t remainingLen = len, activeLen;
-    uint32_t state = _update_byte_processor_state(medium, address, remainingLen, 0);
+    uint32_t state = _byte_processor_state_init(medium, address, remainingLen);
 
     // itterate through all blocks 
     while (state < 4) {
@@ -75,7 +76,7 @@ int memory_io_bytes_get(MemoryIO_Medium_t * medium, uint32_t address, uint8_t * 
         remainingLen -= activeLen;
         dst += activeLen;
 
-        _update_byte_processor_state(medium, address, remainingLen, state);
+        state = _byte_processor_state_update(medium, remainingLen, state);
     }
 
     return 0;
@@ -108,14 +109,22 @@ int memory_io_blocks_get(MemoryIO_Medium_t * medium, uint32_t address, uint8_t *
 static uint32_t _byte_to_block_address(MemoryIO_Medium_t * medium, uint32_t address) { return (address / medium->block.size) * medium->block.increment; }
 static uint32_t _block_to_byte_address(MemoryIO_Medium_t * medium, uint32_t address) { return (address / medium->block.increment) * medium->block.size; }
 
-static uint32_t _update_byte_processor_state(MemoryIO_Medium_t * medium, uint32_t startAddress, uint32_t remainingLen, uint32_t currentState) {
-    if (currentState == 3 || !remainingLen) {
+static uint32_t _byte_processor_state_update(MemoryIO_Medium_t * medium, uint32_t remainingLen, uint32_t currentState) {
+    if (currentState == 3 || remainingLen == 0) {
         return 4;
     } else if (remainingLen < medium->block.size) {
         return 3;
-    } else if (startAddress % medium->block.size || currentState == 1) {
-        return 2;   // todo should default to two fix with tests and add state machine init parameter
     } 
-    
-    return 1;
+    // the previous two conditions and setup at initialisation implies: currentState == 1
+    return 2;
+}
+
+static uint32_t _byte_processor_state_init(MemoryIO_Medium_t * medium, uint32_t startAddress, uint32_t remainingLen) {
+    if (remainingLen < medium->block.size) {
+        return 3;
+    } else if (startAddress % medium->block.size) {
+        return 1;
+    }
+
+    return 2;
 }
