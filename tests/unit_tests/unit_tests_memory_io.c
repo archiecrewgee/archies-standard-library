@@ -138,26 +138,38 @@ static int test_medium_0_block_get(void) {
 
 static int test_medium_1_byte_get(void) {
     // note that block is size 4 but increments with 1... therefore
+    set(_medium_1_memory, 0, sizeof(_medium_1_memory));
     int testsPassed = 0;
 
     // basic alignment
-    char testStr[] = "this is a 21B string", compStr[21] = { 0 };
+    char testStr[] = "this is a 21B string", compStr[sizeof(testStr)] = { 0 };
 
     copy(&_medium_1_memory[16 * 4], testStr, sizeof(testStr));
     memory_io_bytes_get(&_medium_1, 16 * 4, compStr, sizeof(testStr));
 
     testsPassed += compare(testStr, compStr, sizeof(testStr));
-    printf("\n%d, %s | %s", testsPassed, testStr, compStr);
     
     // offset
     copy(&_medium_1_memory[16 * 4 + 3], testStr, sizeof(testStr));
     memory_io_bytes_get(&_medium_1, 16 * 4 + 3, compStr, sizeof(testStr));
 
     testsPassed += compare(testStr, compStr, sizeof(testStr));
-    printf("\n%d, %s | %s", testsPassed, testStr, compStr);
 
     return testsPassed != 2;
 }
 static int test_medium_1_byte_set(void) {
-    return 0;
+    // note that block is size 4 but increments with 1... therefore
+    int testsPassed = 0;
+    set(_medium_1_memory, 0, sizeof(_medium_1_memory));
+    char testStr[] = "this is a 25 byte string", compStr[sizeof(testStr)] = { 0 };
+    
+    // basic alginment
+    memory_io_bytes_set(&_medium_1, 16 * 4, testStr, sizeof(testStr));
+    testsPassed += compare(testStr, &_medium_1_memory[16 * 4], sizeof(testStr));
+    
+    // offset
+    memory_io_bytes_set(&_medium_1, 16 * 4 + 3, testStr, sizeof(testStr));
+    testsPassed += compare(testStr, &_medium_1_memory[16 * 4 + 3], sizeof(testStr));
+
+    return testsPassed != 2;
 }
