@@ -1,0 +1,15 @@
+parameters:
+  - parameter_0:
+      size: 1
+      tag: tag_0
+      default: define_1
+      defined:
+        - define_0: some value rep
+        - define_1: some other value
+        - define_2: another value  
+  - parameter_1:
+      size: 10
+      tag: tag_0
+  - parameter_2:
+      size: 2
+      tag: tag_1
