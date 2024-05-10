@@ -85,7 +85,7 @@ void deallocate(void * pointer) {
 
 void defragment(void) {
     // defragmenting is done in two stages. 
-    // the first stage itterates through the map items and pushes them towards the start of the heap, todo: should they be ordered here???
+    // the first stage itterates through the map items and pushes them towards the start of the heap; note that this steps orders the map items according to their proximity to the end
     // the second stage pushes all memory blocks to the end of the heap in order of their proximity to this, i.e. the closest byte to the end of the heap is pushed first
     // it goes without saying that this function also updates the tail and head
     
@@ -142,6 +142,18 @@ void set(void * dst, uint8_t value, size_t size) {
     while (size--) {
         *((uint8_t *) dst++) = value;
     }
+}
+
+
+bool compare(void * a, void * b, size_t size) {
+    // itterate through elements until difference is found, default is passing state
+    while (size--) {
+        if (*((uint8_t *) a++) != *((uint8_t *) b++)) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /* Private Function Definiton */

@@ -28,7 +28,7 @@
  *  }
  * 
  */
-typedef bool (SortBubbleKey_t)(void * a, void * b);
+typedef bool (Sort_BubbleKey_f)(void * a, void * b);
 
 /* Constants */
 
@@ -42,6 +42,6 @@ typedef bool (SortBubbleKey_t)(void * a, void * b);
  * @param arrLen the number of elements in the array
  * @param key the key to sort elements by
  */
-void sort_bubble(void * arr, size_t elementSize, uint32_t arrLen, SortBubbleKey_t key);
+void sort_bubble(void * arr, size_t elementSize, uint32_t arrLen, Sort_BubbleKey_f key);
 
 #endif

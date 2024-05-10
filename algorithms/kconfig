@@ -1,0 +1,2 @@
+config CMAKE_ALGORITHMS_ENABLE
+    bool 'enable algorithms' 

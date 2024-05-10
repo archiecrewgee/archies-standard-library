@@ -1,0 +1,13 @@
+menu "Archie's Standard Library"
+
+config CMAKE_TESTS_ENABLE
+    bool "enable tests"
+    select CMAKE_ALGORITHMS_ENABLE
+    select CMAKE_MEMORY_ENABLE
+    select CMAKE_MEMORY_IO_ENABLE
+
+rsource "algorithms/kconfig"
+rsource "memory/kconfig"
+rsource "memory_io/kconfig"
+
+endmenu

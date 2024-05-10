@@ -14,6 +14,7 @@
 /* Standard Includes */
 #include "stddef.h"
 #include "stdint.h"
+#include "stdbool.h"
 
 /* Internal Includes */
 
@@ -21,7 +22,7 @@
 
 /* Constants */
 // heap size in bytes
-#define HEAP_SIZE 255
+#define HEAP_SIZE 255   // note heap should be moved to instance based
 
 /* Public Function Declaration */
 
@@ -66,7 +67,7 @@ void copy(void * dst, void * src, size_t size);
 void copy_safe(void * dst, void * src, size_t size);
 
 /**
- * @brief swaps too elements of an arbitary size
+ * @brief swaps two elements of an arbitary size
  * 
  * @param a pointer to element a
  * @param b pointer to element b
@@ -83,6 +84,15 @@ void swap(void * a, void * b, size_t size);
  */
 void set(void * dst, uint8_t value, size_t size);
 
-
+/**
+ * @brief Compares two elements of an arbitary size
+ * 
+ * @param a pointer to the first element
+ * @param b pointer to the seconds element
+ * @param size size of the memory to compare
+ * @return true a and b are identical
+ * @return false a and b are not identical
+ */
+bool compare(void * a, void * b, size_t size);
 
 #endif

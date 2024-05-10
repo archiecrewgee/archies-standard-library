@@ -11,6 +11,7 @@ RUN \
 # Basic tools
     wget \
     python3 \
+    python-is-python3 \
 # Build tools
     cmake \ 
     ninja-build \
