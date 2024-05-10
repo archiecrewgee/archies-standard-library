@@ -1,2 +1,3 @@
+message(STATUS "/custom_types")
+
 # Include subdirectories #
-add_subdirectory(array_type)
