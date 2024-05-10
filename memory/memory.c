@@ -17,6 +17,7 @@ typedef struct {
 /* Constants */
 
 /* Internal Variables */
+
 /* Private Function Declaration */
 
 /**
@@ -109,7 +110,7 @@ void defragment(Memory_Heap_t * heap) {
     heap->head = heap->heap + (n * sizeof(Memory_HeapMapElement_t));
 
     // run through all map items and copy items to the back
-    heap->tail = &heap->heap[HEAP_SIZE - 1];  // reset tail
+    heap->tail = &heap->heap[heap->sizeTotal - 1];  // reset tail
 
     for(Memory_HeapMapElement_t * p = (Memory_HeapMapElement_t *) heap->heap; (void *) p < heap->head; p++) {
         heap->tail -= p->size;

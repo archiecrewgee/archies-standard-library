@@ -37,8 +37,6 @@ typedef struct {
 } Memory_Heap_t;
 
 /* Constants */
-// heap size in bytes
-#define HEAP_SIZE 255   // note heap should be moved to instance based
 
 /* Public Function Declaration */
 
@@ -48,7 +46,7 @@ typedef struct {
  * @note 
  *  the heap array should never be deallocated
  * 
- * @param heap pointer to statically allocated array for storing heap memory
+ * @param heapMemory pointer to statically allocated array for storing heap memory
  * @param heapSize total size of the heap - i.e. sizeof(heap)
  * @return Memory_Heap_t defined heap memory structure
  */
