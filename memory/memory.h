@@ -31,7 +31,7 @@
 typedef struct {
     uint8_t * heap;         // reference to statically allocated byte array
     size_t sizeTotal;       // size of the heap array
-    size_t sizeRemaining;   // remaining size of the heap <- TODO: this is a derivation of `head` and `tail` so maybe should be removed???
+    size_t sizeRemaining;   // remaining size of the heap - always >= tail - heap
     void * head;            // pointer to the current head of the array (allocated memory map end)
     void * tail;            // pointer to the current tail of the array (allocated memory start)
 } Memory_Heap_t;
@@ -52,7 +52,7 @@ typedef struct {
  * @param heapSize total size of the heap - i.e. sizeof(heap)
  * @return Memory_Heap_t defined heap memory structure
  */
-Memory_Heap_t heap_init(uint8_t * heap, size_t heapSize);
+Memory_Heap_t heap_init(uint8_t * heapMemory, size_t heapSize);
 
 /**
  * @brief allocates memory of size `size` to a heap. This can be used to preserve information out of scope
@@ -67,7 +67,7 @@ void * allocate(Memory_Heap_t * heap, size_t size);
  * @brief deallocates the memory at the given pointer
  * 
  * @param heap pointer to heap instance 
- * @param pointer pointer previously allocated by the `allocate` function
+ * @param pointer pointer to memory previously allocated via the `allocate` function
  */
 void deallocate(Memory_Heap_t * heap, void * pointer);
 
