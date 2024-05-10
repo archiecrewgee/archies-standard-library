@@ -25,3 +25,6 @@ We really need a basic return type functionality: maybe an asl_types. Until then
 add instance based heap in memory
 actually do the array type
     maybe make general buffer with fifo, stack design and basic array; what about linked lists???
+
+
+    TALK ABOUT AVOIDING CONSTS IN STRUCTS TO GIVE USER FREEDOm

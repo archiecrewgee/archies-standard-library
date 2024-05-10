@@ -20,6 +20,22 @@
 
 /* Structures */
 
+/**
+ * @brief 
+ *  Heap structure used to allow strongly controlled and limited memory allocation and deallocation.
+ *  The heap should be statically allocated and a reference passed to the strucutre
+ * @note 
+ *  For safe initialisation use `heap_init(ptr, size)` functionality 
+ * 
+ */
+typedef struct {
+    uint8_t * heap;         // reference to statically allocated byte array
+    size_t sizeTotal;       // size of the heap array
+    size_t sizeRemaining;   // remaining size of the heap <- TODO: this is a derivation of `head` and `tail` so maybe should be removed???
+    void * head;            // pointer to the current head of the array (allocated memory map end)
+    void * tail;            // pointer to the current tail of the array (allocated memory start)
+} Memory_Heap_t;
+
 /* Constants */
 // heap size in bytes
 #define HEAP_SIZE 255   // note heap should be moved to instance based
@@ -27,25 +43,40 @@
 /* Public Function Declaration */
 
 /**
+ * @brief 
+ *  safetly defines the heap structure for use in dynamic memory allocation 
+ * @note 
+ *  the heap array should never be deallocated
+ * 
+ * @param heap pointer to statically allocated array for storing heap memory
+ * @param heapSize total size of the heap - i.e. sizeof(heap)
+ * @return Memory_Heap_t defined heap memory structure
+ */
+Memory_Heap_t heap_init(uint8_t * heap, size_t heapSize);
+
+/**
  * @brief allocates memory of size `size` to a heap. This can be used to preserve information out of scope
  * 
+ * @param heap pointer to heap instance 
  * @param size size of the memory to allocate in bytes
  * @return void* pointer to the memory allocated in memory. Returns NULL if no memory could be found
  */
-void * allocate(size_t size);
+void * allocate(Memory_Heap_t * heap, size_t size);
 
 /**
  * @brief deallocates the memory at the given pointer
  * 
+ * @param heap pointer to heap instance 
  * @param pointer pointer previously allocated by the `allocate` function
  */
-void deallocate(void * pointer);
+void deallocate(Memory_Heap_t * heap, void * pointer);
 
 /**
  * @brief Defragments the heap stack to byte-pack memory and map
  * 
+ * @param heap pointer to heap instance 
  */
-void defragment(void);
+void defragment(Memory_Heap_t * heap);
 
 /**
  * @brief copys `size` bytes of memory from the source to the destination pointer
