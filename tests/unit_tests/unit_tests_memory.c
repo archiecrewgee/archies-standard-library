@@ -18,9 +18,9 @@ static Tests_SuiteReturn_t _performance_heap, _performance_util;
 
 /* Heap unit tests */
 // statically allocated heap memory
-static uint8_t _memory[124] = { 0 };
+static uint8_t _memory[256] = { 0 };
 
-int unit_test_heap_dynamic_memory_overlap(void) {
+static int unit_test_heap_dynamic_memory_overlap(void) {
     /* Setup */
     set(_memory, 0, sizeof(_memory));
     Memory_Heap_t heap = heap_init(_memory, sizeof(_memory));
@@ -39,15 +39,32 @@ int unit_test_heap_dynamic_memory_overlap(void) {
     return !(*a == INT32_MAX && *b == INT16_MIN);
 }
 
-int unit_test_heap_allocation_limit(void) {
+static int unit_test_heap_allocation_limit(void) {
+    /* Setup */
+    set(_memory, 0, sizeof(_memory));
+    Memory_Heap_t heap = heap_init(_memory, sizeof(_memory));
+
+    /* Test - allocate memory up to limit */
+    // note that the size of the map is not available by design however, 4 allocations of 64 byte values in a 256 byte array should limit itself to 3
+    int passed = 0;
+    for (int i = 0; i < 3; i++) {
+        if (allocate(&heap, 64)) {
+            passed++;
+        }
+    }
+
+    // attempt to allocate and validate it does not allow this (null ptr return)
+    passed += (allocate(&heap, 32) == NULL);
+    
+    return !(passed == 4);
+
+}
+
+static int unit_test_heap_deallocation_freeing_space(void) {
     return 0;
 }
 
-int unit_test_heap_deallocation_freeing_space(void) {
-    return 0;
-}
-
-int unit_test_heap_maximum_capacity(void) {
+static int unit_test_heap_maximum_capacity(void) {
     return 0;
 }
 
