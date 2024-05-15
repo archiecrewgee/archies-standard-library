@@ -61,6 +61,20 @@ static int unit_test_heap_allocation_limit(void) {
 }
 
 static int unit_test_heap_deallocation_freeing_space(void) {
+    /* Setup */
+    set(_memory, 0, sizeof(_memory));
+    Memory_Heap_t heap = heap_init(_memory, sizeof(_memory));
+
+    /* Test - write to limited allocation, deallocate a pointer then rewrite allocation*/
+    int * a = allocate(&heap, sizeof(*a));
+    *a = 76;
+
+    int * scratch = NULL, i; 
+    while ((scratch = allocate(&heap, sizeof(*scratch)))) {
+        *scratch = i++;
+    }
+
+
     return 0;
 }
 

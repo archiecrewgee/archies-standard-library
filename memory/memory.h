@@ -46,7 +46,7 @@ typedef struct {
  * @note 
  *  the heap array should never be deallocated
  * 
- * @param heapMemory pointer to statically allocated array for storing heap memory
+ * @param heapMemory pointer to statically allocated array for storing heap memory. This should be initialised to zero to avoid undefined behaviour
  * @param heapSize total size of the heap - i.e. sizeof(heap)
  * @return Memory_Heap_t defined heap memory structure
  */
