@@ -1,2 +1,2 @@
 # Include subdirectories #
-add_subdirectory(array_type)
+# add_subdirectory(array_type)

@@ -4,6 +4,7 @@
         "stddef.h": "c",
         "stdio.h": "c",
         "typeinfo": "c",
-        "memory.h": "c"
+        "memory.h": "c",
+        "unit_tests_memory_io.h": "c"
     }
 }

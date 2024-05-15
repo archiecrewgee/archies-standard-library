@@ -16,4 +16,14 @@
  * 
  */
 #define asl_assert_v(condition) {int returnValue = condition; if (returnValue) { return returnValue; }}
+
+/**
+ * @brief 
+ *  Returns the nuber of elements in an array of a given type
+ * @note 
+ *  The array length and type must be declared in scope
+ * 
+ */
+#define asl_array_len(array) (sizeof(array) / sizeof(*array))
+
 #endif
