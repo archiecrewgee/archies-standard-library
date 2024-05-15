@@ -4,6 +4,7 @@
 
 /* Internal Includes */
 #include "tests.h"
+#include "macros.h"
 #include "unit_tests_memory_io.h"
 
 #include "memory.h"
@@ -14,10 +15,6 @@
 /* Constants */
 
 /* Variables */
-static Tests_SuiteReturn_t _performance = {
-    .testsTotal = 0,
-    .testsPassed = 0,
-};
 
 /* Private Function Declaration */
 /* Medium 0 tests */
@@ -99,14 +96,7 @@ static Tests_TestDisplay_t _tests[] = {
 
 /* Public Function Definiton */
 Tests_SuiteReturn_t memory_io_test_suite_run(void) {
-    _performance.testsTotal = sizeof(_tests) / sizeof(*_tests);
-    for (int i = 0, pass = 0; i < _performance.testsTotal; i++) {
-        pass = _tests[i].run() == 0;
-        _performance.testsPassed += pass;
-        printf("\n\t%s | %s.%s", passFailStr[pass], MEMORY_IO_TEST_SUITE_NAME, _tests[i].name);
-    }
-
-    return _performance;
+    return test_util_suite_run(MEMORY_IO_TEST_SUITE_NAME, _tests, asl_array_len(_tests));
 }
 
 /* Private Function Definiton */

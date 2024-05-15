@@ -6,7 +6,7 @@
 #include "tests.h"
 #include "macros.h"
 
-#include "memory.h"
+#include "unit_tests_memory.h"
 
 /* Structures */
 
@@ -16,35 +16,21 @@
 static Tests_SuiteReturn_t _performance_heap, _performance_util;
 
 /* Private Function Declaration */
-
+int sanity_test(void) {
+    return 0;
+}
 
 /* Test Runner */
-static Tests_TestDisplay_t _test_heap[] = {
+static Tests_TestDisplay_t _tests_heap[] = {
     {
-        .name = "medium_0_block_get",
-        .run = test_medium_0_block_get
-    }, {
-        .name = "medium_0_block_set",
-        .run = test_medium_0_block_set
-    }, {
-        .name = "medium_1_byte_get",
-        .run = test_medium_1_byte_get
-    }, {
-        .name = "medium_1_byte_set",
-        .run = test_medium_1_byte_set
-    }
+        .name = "sanity_test",
+        .run = sanity_test
+    },
 };
 
 /* Public Function Definiton */
 Tests_SuiteReturn_t memory_heap_test_suite_run(void) {
-    _performance_heap.testsTotal = asl_array_len(_test_heap);
-    for (int i = 0, pass = 0; i < _performance_heap.testsTotal; i++) {
-        pass = _test_heap[i].run() == 0;
-        _performance_heap.testsPassed += pass;
-        printf("\n\t%s | %s.%s", passFailStr[pass], MEMORY_HEAP_TEST_SUITE_NAME, _test_heap[i].name);
-    }
-
-    return _performance_heap;
+    return test_util_suite_run(MEMORY_HEAP_TEST_SUITE_NAME, _tests_heap, asl_array_len(_tests_heap));
 }
 
 /* Private Function Definiton */
