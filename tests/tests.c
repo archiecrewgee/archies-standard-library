@@ -3,6 +3,7 @@
 
 /* asl includes */
 #include "tests.h"
+#include "macros.h"
 
 #include "unit_tests_memory_io.h"
 #include "unit_tests_memory.h"
@@ -22,7 +23,7 @@ static Tests_SuiteDisplay_t _unitTests[] = {
     // add more tests here
 };
 
-#define NUM_UNIT_TEST_SUITES (sizeof(_unitTests) / sizeof(*_unitTests))
+#define NUM_UNIT_TEST_SUITES asl_array_len(_unitTests)
 
 
 /* Entrance Function */
@@ -36,7 +37,7 @@ int main() {
     for (int i = 0; i < NUM_UNIT_TEST_SUITES; i++) {
         printf("\nRunning suite: %s", _unitTests[i].name);
         resultUnitTests[i] = _unitTests[i].run();
-        printf("\nTests passed: %d/%d (%.1f%%)", resultUnitTests[i].passed, resultUnitTests[i].total, ((float) resultUnitTests[i].passed) / ((float) resultUnitTests[i].total) * 100.0);
+        printf("\n\tTests passed: %d/%d (%.1f%%)", resultUnitTests[i].passed, resultUnitTests[i].total, ((float) resultUnitTests[i].passed) / ((float) resultUnitTests[i].total) * 100.0);
     }
 
     // summary loop
